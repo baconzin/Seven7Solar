@@ -44,11 +44,11 @@ const COLORS = {
 const Logo = ({ className = "" }: { className?: string }) => (
   <div className={`flex items-center font-bold tracking-tighter ${className}`}>
     <div className="flex flex-col leading-none">
-      <span className="text-white text-2xl tracking-[0.2em]">SEVEN</span>
+      <span className="text-solar-black text-2xl tracking-[0.2em]">SEVEN</span>
       <span className="text-lime text-[10px] tracking-[0.5em] font-light">ENERGY</span>
     </div>
     <span className="text-solar-blue text-4xl italic ml-1 glow-blue -mt-1">7</span>
-    <span className="text-white text-2xl ml-1">SOLAR</span>
+    <span className="text-solar-black text-2xl ml-1">SOLAR</span>
   </div>
 );
 
@@ -64,10 +64,10 @@ const Button = ({
   onClick?: () => void
 }) => {
   const variants = {
-    primary: "bg-white text-black hover:bg-lime hover:text-black",
-    outline: "border border-white/20 text-white hover:border-lime hover:text-lime",
-    ghost: "text-white/70 hover:text-white",
-    lime: "bg-lime text-black hover:bg-white transition-all shadow-[0_0_15px_rgba(204,255,0,0.3)] hover:shadow-[0_0_25px_rgba(204,255,0,0.5)]"
+    primary: "bg-solar-black text-white hover:bg-lime hover:text-black",
+    outline: "border border-solar-black/20 text-solar-black hover:border-lime hover:text-lime",
+    ghost: "text-solar-black/60 hover:text-solar-black",
+    lime: "bg-lime text-black hover:bg-solar-black hover:text-white transition-all shadow-[0_0_15px_rgba(191,255,0,0.3)] hover:shadow-[0_0_25px_rgba(191,255,0,0.5)]"
   };
 
   return (
@@ -115,7 +115,7 @@ const SectionHeading = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="text-white/60 text-lg leading-relaxed"
+        className="text-solar-black/60 text-lg leading-relaxed"
       >
         {description}
       </motion.p>
@@ -142,7 +142,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'py-4 bg-solar-dark-gray/80 backdrop-blur-md border-b border-white/10' : 'py-8 bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'py-4 bg-white/80 backdrop-blur-md border-b border-black/5' : 'py-8 bg-transparent'}`}>
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a href="#home" className="hover:opacity-80 transition-opacity">
           <Logo />
@@ -154,7 +154,7 @@ const Navbar = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-medium text-white/70 hover:text-lime transition-colors uppercase tracking-widest px-2 py-1"
+              className="text-sm font-medium text-solar-black/70 hover:text-lime transition-colors uppercase tracking-widest px-2 py-1"
             >
               {link.name}
             </a>
@@ -164,7 +164,7 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-white p-2"
+          className="md:hidden text-solar-black p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -178,14 +178,14 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-solar-dark-gray border-b border-white/10 p-8 md:hidden"
+            className="absolute top-full left-0 w-full bg-white border-b border-black/5 p-8 md:hidden"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
                 <a 
                   key={link.name} 
                   href={link.href} 
-                  className="text-xl font-medium text-white/70 hover:text-lime transition-colors"
+                  className="text-xl font-medium text-solar-black/70 hover:text-lime transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
@@ -212,9 +212,9 @@ const Hero = () => {
           style={{ y: y1 }}
           src="https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?auto=format&fit=crop&q=80&w=2000" 
           alt="Modern house with solar panels" 
-          className="w-full h-full object-cover opacity-40 scale-110"
+          className="w-full h-full object-cover opacity-60 scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-solar-black via-solar-black/60 to-solar-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/40 to-white"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime/10 blur-[150px] rounded-full pointer-events-none"></div>
       </div>
 
@@ -223,29 +223,28 @@ const Hero = () => {
            initial={{ opacity: 0, scale: 0.9 }}
            animate={{ opacity: 1, scale: 1 }}
            transition={{ duration: 0.8 }}
-           className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 border border-white/10"
+           className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 border border-black/5"
         >
-          <span className="w-2 h-2 bg-lime rounded-full animate-pulse shadow-[0_0_10px_#CCFF00]"></span>
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">Líder em Eficiência Energética</span>
+          <span className="w-2 h-2 bg-lime rounded-full animate-pulse shadow-[0_0_10px_#BFFF00]"></span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-solar-black/80">Líder em Eficiência Energética</span>
         </motion.div>
 
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-8xl font-serif font-medium leading-[1.1] mb-8 text-white max-w-5xl mx-auto"
+          className="text-5xl md:text-8xl font-serif font-medium leading-[1.1] mb-8 text-solar-black max-w-5xl mx-auto"
         >
-          Economize até <span className="text-lime lime-text-glow">95%</span> <br />
-          na sua conta de energia
+          Troque sua conta de luz por uma parcela <span className="text-lime lime-text-glow">90% menor</span>
         </motion.h1>
 
         <motion.p 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-2xl text-white/60 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
+          className="text-lg md:text-2xl text-solar-black/60 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
         >
-          Projetos de energia solar de alta performance para residências, fazendas e empresas. Tecnologia que impulsiona o seu futuro.
+          Tenha energia solar pelo resto da vida com investimentos que se pagam sozinhos. Projetos premium para residências, fazendas e empresas.
         </motion.p>
 
         <motion.div 
@@ -260,16 +259,6 @@ const Hero = () => {
           <Button variant="outline" className="w-full sm:w-auto text-lg" onClick={() => document.getElementById('simulator')?.scrollIntoView()}>
             Simular Economia
           </Button>
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-white/30">Scroll to Explore</span>
-          <div className="w-px h-12 bg-gradient-to-b from-lime to-transparent"></div>
         </motion.div>
       </div>
     </section>
@@ -311,7 +300,7 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-solar-black">
+    <section className="py-24 relative overflow-hidden bg-solar-gray">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Por que escolher solar?"
@@ -330,11 +319,11 @@ const Benefits = () => {
               transition={{ delay: idx * 0.1 }}
               className="glass p-10 rounded-3xl group hover:border-lime/40 transition-all duration-500 neon-border"
             >
-              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-solar-black/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                 {benefit.icon}
               </div>
               <h3 className="text-2xl font-medium mb-4 group-hover:text-lime transition-colors">{benefit.title}</h3>
-              <p className="text-white/50 leading-relaxed">{benefit.description}</p>
+              <p className="text-solar-black/50 leading-relaxed">{benefit.description}</p>
             </motion.div>
           ))}
         </div>
@@ -357,7 +346,7 @@ const Solutions = () => {
       description: "Potência para o produtor rural: irrigação, galpões e redução de custos operacionais.",
       items: ["Fazendas", "Irrigação", "Bombas", "Galpões agrícolas"],
       image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
-      color: "white"
+      color: "solarBlack"
     },
     {
       title: "INDUSTRIAL",
@@ -369,7 +358,7 @@ const Solutions = () => {
   ];
 
   return (
-    <section id="soluções" className="py-24 bg-solar-dark-gray">
+    <section id="soluções" className="py-24 bg-white">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Nossas Soluções"
@@ -385,26 +374,26 @@ const Solutions = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative h-[600px] rounded-[40px] overflow-hidden bg-solar-black"
+              className="group relative h-[600px] rounded-[40px] overflow-hidden bg-solar-gray"
             >
-              <img src={sol.image} alt={sol.title} className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-solar-black via-solar-black/40 to-transparent"></div>
+              <img src={sol.image} alt={sol.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
               
               <div className="absolute inset-0 p-10 flex flex-col justify-end">
-                <h3 className={`text-4xl font-serif italic mb-6 ${sol.color === 'lime' ? 'text-lime' : sol.color === 'solarBlue' ? 'text-solar-blue' : 'text-white'}`}>
+                <h3 className={`text-4xl font-serif italic mb-6 ${sol.color === 'lime' ? 'text-lime' : sol.color === 'solarBlue' ? 'text-solar-blue' : 'text-solar-black'}`}>
                   {sol.title}
                 </h3>
-                <p className="text-white/80 mb-8 leading-relaxed">
+                <p className="text-solar-black/80 mb-8 leading-relaxed">
                   {sol.description}
                 </p>
                 <ul className="space-y-3 mb-10">
                   {sol.items.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-white/60">
+                    <li key={i} className="flex items-center gap-3 text-sm text-solar-black/60">
                       <CheckCircle2 size={16} className="text-lime" /> {item}
                     </li>
                   ))}
                 </ul>
-                <Button variant="outline" className="w-full group-hover:bg-white group-hover:text-black">Saber Mais</Button>
+                <Button variant="outline" className="w-full group-hover:bg-solar-black group-hover:text-white">Saber Mais</Button>
               </div>
             </motion.div>
           ))}
@@ -421,10 +410,10 @@ const CalculatorSection = () => {
   const monthlySaving = billValue * 0.95;
   const yearlySaving = monthlySaving * 12;
   const plates = Math.ceil(billValue / 65);
-  const payback = propertyType === 'industrial' ? 3.5 : 4.5;
+  const payback = 2.5;
 
   return (
-    <section id="simulator" className="py-24 relative overflow-hidden">
+    <section id="simulator" className="py-24 relative overflow-hidden bg-white">
       <div className="absolute top-0 left-0 w-full h-full bg-lime/5 -skew-y-3 origin-top-left -z-10"></div>
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -437,7 +426,7 @@ const CalculatorSection = () => {
             
             <div className="glass p-8 md:p-12 rounded-[2rem] neon-border">
               <div className="mb-10">
-                <label className="block text-sm font-bold uppercase tracking-widest text-white/50 mb-4">Valor Médio da Conta (R$)</label>
+                <label className="block text-sm font-bold uppercase tracking-widest text-solar-black/50 mb-4">Valor Médio da Conta (R$)</label>
                 <div className="flex items-center gap-6">
                    <input 
                     type="range" 
@@ -446,7 +435,7 @@ const CalculatorSection = () => {
                     step="50" 
                     value={billValue} 
                     onChange={(e) => setBillValue(Number(e.target.value))}
-                    className="flex-1 accent-lime h-2 bg-white/10 rounded-full"
+                    className="flex-1 accent-lime h-2 bg-solar-black/10 rounded-full"
                   />
                   <span className="text-3xl font-mono text-lime font-bold w-32 border-b border-lime/30 pb-1">
                     {billValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }).replace('R$', '')}
@@ -459,7 +448,7 @@ const CalculatorSection = () => {
                   <button
                     key={type}
                     onClick={() => setPropertyType(type)}
-                    className={`py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${propertyType === type ? 'bg-lime text-black' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}
+                    className={`py-3 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${propertyType === type ? 'bg-lime text-black' : 'bg-solar-black/5 text-solar-black/50 hover:bg-solar-black/10'}`}
                   >
                     {type}
                   </button>
@@ -475,30 +464,30 @@ const CalculatorSection = () => {
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
                   <TrendingUp size={80} className="text-lime" />
                </div>
-               <span className="text-sm font-bold text-white/40 uppercase tracking-widest mb-2">Economia Mensal</span>
+               <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Economia Mensal</span>
                <div className="text-4xl font-serif text-lime font-bold">R$ {monthlySaving.toFixed(2)}</div>
-               <div className="text-xs text-white/30 mt-4">Redução estimada de 95%</div>
+               <div className="text-xs text-solar-black/30 mt-4">Redução estimada de 95%</div>
             </div>
 
             <div className="glass p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
                   <Sun size={80} className="text-solar-blue" />
                </div>
-               <span className="text-sm font-bold text-white/40 uppercase tracking-widest mb-2">Qtde. de Placas</span>
-               <div className="text-4xl font-serif text-white font-bold">{plates} Unidades</div>
-               <div className="text-xs text-white/30 mt-4">Aproximadamente</div>
+               <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Qtde. de Placas</span>
+               <div className="text-4xl font-serif text-solar-black font-bold">{plates} Unidades</div>
+               <div className="text-xs text-solar-black/30 mt-4">Aproximadamente</div>
             </div>
 
             <div className="glass p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                  <Calculator size={80} className="text-white" />
+                  <Calculator size={80} className="text-solar-black" />
                </div>
-               <span className="text-sm font-bold text-white/40 uppercase tracking-widest mb-2">Economia Anual</span>
-               <div className="text-4xl font-serif text-white font-bold">R$ {yearlySaving.toLocaleString('pt-BR')}</div>
-               <div className="text-xs text-white/30 mt-4">Mais liberdade financeira</div>
+               <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Economia Anual</span>
+               <div className="text-4xl font-serif text-solar-black font-bold">R$ {yearlySaving.toLocaleString('pt-BR')}</div>
+               <div className="text-xs text-solar-black/30 mt-4">Mais liberdade financeira</div>
             </div>
 
-            <div className="bg-lime p-10 rounded-[2.5rem] flex flex-col justify-center text-black shadow-[0_0_50px_rgba(204,255,0,0.2)]">
+            <div className="bg-lime p-10 rounded-[2.5rem] flex flex-col justify-center text-black shadow-[0_0_50px_rgba(191,255,0,0.1)]">
                <span className="text-sm font-bold opacity-60 uppercase tracking-widest mb-2">Retorno Médio</span>
                <div className="text-4xl font-serif font-bold italic">{payback} Anos</div>
                <div className="text-xs opacity-50 mt-4">Estimativa de Investimento</div>
@@ -519,7 +508,7 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projetos" className="py-24 bg-solar-black">
+    <section id="projetos" className="py-24 bg-solar-gray">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Portfólio"
@@ -538,10 +527,10 @@ const Projects = () => {
               className="group relative aspect-[3/4] rounded-3xl overflow-hidden"
             >
               <img src={p.img} alt={p.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-solar-black via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
               <div className="absolute bottom-6 left-6 right-6">
                 <span className="text-lime text-[10px] font-bold uppercase tracking-[0.3em] mb-1 block">{p.category}</span>
-                <h4 className="text-xl font-medium">{p.title}</h4>
+                <h4 className="text-xl font-medium text-solar-black">{p.title}</h4>
               </div>
             </motion.div>
           ))}
@@ -552,11 +541,13 @@ const Projects = () => {
 };
 
 const Contact = () => {
+  const cities = ["Rio Claro, SP", "Araras, SP", "Campinas, SP", "Limeira, SP", "Piracicaba, SP", "Santa Gertrudes, SP", "Ajapi, SP", "Cordeirópolis, SP", "Ipeúna, SP", "Corumbataí, SP", "Itirapina, SP"];
+  
   return (
-    <section id="contato" className="py-24 relative overflow-hidden">
+    <section id="contato" className="py-24 relative overflow-hidden bg-white">
        {/* Fake Map background effect */}
-      <div className="absolute inset-0 -z-10 opacity-20">
-        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:20px_20px]"></div>
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_1px,transparent_1px)] [background-size:20px_20px]"></div>
       </div>
 
       <div className="container mx-auto px-6">
@@ -573,60 +564,62 @@ const Contact = () => {
 
               <div className="space-y-8">
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
                     <Phone className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-white/30 uppercase tracking-widest block mb-1">WhatsApp</span>
-                    <span className="text-xl font-medium">+55 (11) 99999-9999</span>
+                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-1">WhatsApp</span>
+                    <span className="text-xl font-medium text-solar-black">+55 (19) 99310-4774</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
                     <Mail className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-white/30 uppercase tracking-widest block mb-1">Email</span>
-                    <span className="text-xl font-medium">contato@sevensolar.com.br</span>
+                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-1">Email</span>
+                    <span className="text-xl font-medium text-solar-black">contato@sevensolar.com.br</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 group">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                <div className="flex items-start gap-6 group">
+                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors shrink-0">
                     <MapPin className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-white/30 uppercase tracking-widest block mb-1">Localização</span>
-                    <span className="text-xl font-medium">São Paulo, SP - Brasil</span>
+                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-3">Área de Atuação</span>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm font-medium text-solar-black/80">
+                       {cities.map(city => <span key={city}>{city}</span>)}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 p-8 md:p-12 rounded-[2.5rem] border border-white/10">
+            <div className="bg-solar-black/5 p-8 md:p-12 rounded-[2.5rem] border border-solar-black/10">
               <form className="space-y-6">
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Nome Completo</label>
-                  <input type="text" placeholder="Seu nome" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lime/50 transition-colors" />
+                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Nome Completo</label>
+                  <input type="text" placeholder="Seu nome" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Email Corporativo</label>
-                  <input type="email" placeholder="seu@email.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lime/50 transition-colors" />
+                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Email Corporativo</label>
+                  <input type="email" placeholder="seu@email.com" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
                 </div>
                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Telefone</label>
-                      <input type="tel" placeholder="(11) 99999-9999" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lime/50 transition-colors" />
+                      <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Telefone</label>
+                      <input type="tel" placeholder="(19) 99310-4774" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
                     </div>
                      <div>
-                      <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Cidade/UF</label>
-                      <input type="text" placeholder="Sua cidade" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lime/50 transition-colors" />
+                      <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Cidade/UF</label>
+                      <input type="text" placeholder="Sua cidade" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
                     </div>
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Mensagem</label>
-                  <textarea rows={4} placeholder="Conte um pouco sobre sua necessidade..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-lime/50 transition-colors resize-none"></textarea>
+                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Mensagem</label>
+                  <textarea rows={4} placeholder="Conte um pouco sobre sua necessidade..." className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors resize-none"></textarea>
                 </div>
                 <Button variant="lime" className="w-full py-4 text-lg">Enviar Mensagem</Button>
               </form>
@@ -640,53 +633,56 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="py-20 bg-solar-dark-gray border-t border-white/5">
+    <footer className="py-20 bg-solar-gray border-t border-solar-black/5">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="md:col-span-2">
             <Logo className="mb-8" />
-            <p className="text-white/50 max-w-sm mb-8 leading-relaxed">
-              Liderando a revolução energética no Brasil. Tecnologia fotovoltaica de ponta para quem busca excelência e sustentabilidade.
+            <p className="text-solar-black/50 max-w-sm mb-4 leading-relaxed">
+              Liderando a revolução energética no interior de São Paulo. Tecnologia fotovoltaica de ponta para quem busca excelência e sustentabilidade.
+            </p>
+            <p className="text-[10px] text-solar-black/30 uppercase tracking-widest mb-8">
+              Atendimento especializado: Rio Claro, Campinas, Limeira, Piracicaba, Araras, Santa Gertrudes e Região.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-lime hover:text-black transition-all">
+              <a href="#" className="w-12 h-12 rounded-full bg-solar-black/5 flex items-center justify-center hover:bg-lime hover:text-white transition-all">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-lime hover:text-black transition-all">
+              <a href="#" className="w-12 h-12 rounded-full bg-solar-black/5 flex items-center justify-center hover:bg-lime hover:text-white transition-all">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-lime hover:text-black transition-all">
+              <a href="#" className="w-12 h-12 rounded-full bg-solar-black/5 flex items-center justify-center hover:bg-lime hover:text-white transition-all">
                 <Mail size={20} />
               </a>
             </div>
           </div>
 
           <div>
-            <h5 className="font-bold uppercase tracking-[0.2em] text-xs text-white mb-8">Soluções</h5>
+            <h5 className="font-bold uppercase tracking-[0.2em] text-xs text-solar-black mb-8">Soluções</h5>
             <ul className="space-y-4">
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Residencial</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Rural & Fazendas</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Industrial</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Pequenos Comércios</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Residencial</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Rural & Fazendas</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Industrial</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Pequenos Comércios</a></li>
             </ul>
           </div>
 
           <div>
-            <h5 className="font-bold uppercase tracking-[0.2em] text-xs text-white mb-8">Empresa</h5>
+            <h5 className="font-bold uppercase tracking-[0.2em] text-xs text-solar-black mb-8">Empresa</h5>
             <ul className="space-y-4">
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Sobre Nós</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Projetos</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Simulador</a></li>
-              <li><a href="#" className="text-white/40 hover:text-lime transition-colors">Contato</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Sobre Nós</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Projetos</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Simulador</a></li>
+              <li><a href="#" className="text-solar-black/40 hover:text-lime transition-colors">Contato</a></li>
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-white/5 text-xs text-white/30 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-solar-black/5 text-xs text-solar-black/30 space-y-4 md:space-y-0">
           <div>© 2024 Seven Solar Ltda. Todos os direitos reservados.</div>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">Privacidade</a>
-            <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
+            <a href="#" className="hover:text-solar-black transition-colors">Privacidade</a>
+            <a href="#" className="hover:text-solar-black transition-colors">Termos de Uso</a>
           </div>
         </div>
       </div>
@@ -704,7 +700,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-24 bg-solar-dark-gray overflow-hidden">
+    <section className="py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Processo de Transição"
@@ -715,7 +711,7 @@ const HowItWorks = () => {
 
         <div className="relative mt-20">
           {/* Progress Line */}
-          <div className="absolute top-1/2 left-0 w-full h-px bg-white/10 -translate-y-1/2 hidden lg:block"></div>
+          <div className="absolute top-1/2 left-0 w-full h-px bg-solar-black/10 -translate-y-1/2 hidden lg:block"></div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
             {steps.map((step, idx) => (
@@ -727,11 +723,11 @@ const HowItWorks = () => {
                 transition={{ delay: idx * 0.1 }}
                 className="relative z-10 text-center group"
               >
-                <div className="w-16 h-16 rounded-full bg-solar-black border border-white/10 flex items-center justify-center mx-auto mb-6 group-hover:border-lime group-hover:scale-110 transition-all duration-500 glass">
+                <div className="w-16 h-16 rounded-full bg-solar-gray border border-solar-black/10 flex items-center justify-center mx-auto mb-6 group-hover:border-lime group-hover:scale-110 transition-all duration-500 glass">
                    <span className="text-2xl font-serif text-lime font-bold italic">{idx + 1}</span>
                 </div>
                 <h4 className="text-xl font-medium mb-3 group-hover:text-lime transition-colors">{step.title}</h4>
-                <p className="text-sm text-white/40 leading-relaxed max-w-[200px] mx-auto">{step.desc}</p>
+                <p className="text-sm text-solar-black/40 leading-relaxed max-w-[200px] mx-auto">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -749,7 +745,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-solar-black">
+    <section className="py-24 bg-solar-gray">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Depoimentos"
@@ -765,21 +761,21 @@ const Testimonials = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="glass p-10 rounded-[2.5rem] border-white/5 flex flex-col justify-between"
+              className="glass p-10 rounded-[2.5rem] border-solar-black/5 flex flex-col justify-between"
             >
               <div>
                 <div className="flex gap-1 mb-6">
-                  {[1,2,3,4,5].map(s => <Sun key={s} size={14} className="text-lime" fill="#CCFF00" />)}
+                  {[1,2,3,4,5].map(s => <Sun key={s} size={14} className="text-lime" fill="#BFFF00" />)}
                 </div>
-                <p className="text-lg italic text-white/70 mb-8 leading-relaxed">"{r.text}"</p>
+                <p className="text-lg italic text-solar-black/70 mb-8 leading-relaxed">"{r.text}"</p>
               </div>
               <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center font-bold text-lime">
+                 <div className="w-12 h-12 rounded-full bg-solar-black/5 flex items-center justify-center font-bold text-lime">
                    {r.name[0]}
                  </div>
                  <div>
-                    <div className="font-bold">{r.name}</div>
-                    <div className="text-xs text-white/30 uppercase tracking-widest">{r.role}</div>
+                    <div className="font-bold text-solar-black">{r.name}</div>
+                    <div className="text-xs text-solar-black/30 uppercase tracking-widest">{r.role}</div>
                  </div>
               </div>
             </motion.div>
@@ -798,7 +794,7 @@ const App: React.FC = () => {
       <Benefits />
       
       {/* About Section */}
-      <section id="sobre" className="py-24 relative overflow-hidden bg-solar-black">
+      <section id="sobre" className="py-24 relative overflow-hidden bg-white">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
@@ -807,7 +803,7 @@ const App: React.FC = () => {
               </div>
               <div className="absolute -bottom-10 -right-10 glass p-10 rounded-[2rem] hidden md:block">
                  <div className="text-5xl font-serif text-lime font-bold mb-2">+500</div>
-                 <div className="text-xs uppercase tracking-widest text-white/50">Projetos Executados</div>
+                 <div className="text-xs uppercase tracking-widest text-solar-black/50">Projetos Executados</div>
               </div>
             </div>
             <div>
@@ -819,13 +815,13 @@ const App: React.FC = () => {
               <div className="grid grid-cols-2 gap-8 mt-12">
                 <div className="space-y-4">
                   <CheckCircle2 className="text-lime" />
-                  <h4 className="text-lg font-medium">Equipe Técnica</h4>
-                  <p className="text-sm text-white/40">Engenheiros especializados com vasta experiência em campo.</p>
+                  <h4 className="text-lg font-medium text-solar-black">Equipe Técnica</h4>
+                  <p className="text-sm text-solar-black/40">Engenheiros especializados com vasta experiência em campo.</p>
                 </div>
                 <div className="space-y-4">
                    <Clock className="text-lime" />
-                   <h4 className="text-lg font-medium">Instalação Ágil</h4>
-                   <p className="text-sm text-white/40">Processos otimizados para entregar sua economia no menor tempo.</p>
+                   <h4 className="text-lg font-medium text-solar-black">Instalação Ágil</h4>
+                   <p className="text-sm text-solar-black/40">Processos otimizados para entregar sua economia no menor tempo.</p>
                 </div>
               </div>
               <Button variant="outline" className="mt-12">Conhecer Nossa História</Button>
@@ -861,18 +857,20 @@ const App: React.FC = () => {
       <Contact />
       <Footer />
       
-      {/* Bottom Floating Bubble for Mobile WhatsApp */}
+      {/* Floating WhatsApp Button */}
       <motion.a 
-        href="https://wa.me/5511999999999"
+        href="https://wa.me/5519993104774"
         target="_blank"
         rel="noopener noreferrer"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-8 right-8 z-[100] w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-2xl md:hidden"
+        className="fixed bottom-8 right-8 z-[100] w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_40px_rgba(37,211,102,0.6)] transition-all duration-300"
       >
-        <Phone size={28} fill="currentColor" />
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
       </motion.a>
     </div>
   );

@@ -4,11 +4,11 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Plus Jakarta Sans", "Inter", sans-serif;
 
-  --color-lime: #CCFF00;
-  --color-solar-blue: #00BFFF;
-  --color-solar-black: #000000;
-  --color-solar-gray: #1A1A1A;
-  --color-solar-dark-gray: #0A0A0A;
+  --color-lime: #BFFF00; /* Slightly more saturated for light bg */
+  --color-solar-blue: #0088FF; /* Slightly darker blue for contrast */
+  --color-solar-black: #050505;
+  --color-solar-gray: #F8F9FA;
+  --color-solar-dark-gray: #E9ECEF;
 
   --animate-fade-in: fade-in 0.6s ease-out;
   --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -25,8 +25,8 @@
   }
 
   @keyframes glow {
-    from { box-shadow: 0 0 5px #CCFF00, 0 0 10px #CCFF00; }
-    to { box-shadow: 0 0 20px #CCFF00, 0 0 35px #CCFF00; }
+    from { box-shadow: 0 0 5px rgba(191, 255, 0, 0.3); }
+    to { box-shadow: 0 0 15px rgba(191, 255, 0, 0.6); }
   }
 }
 
@@ -35,30 +35,30 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-solar-black text-white selection:bg-lime selection:text-solar-black antialiased;
+    @apply bg-white text-solar-black selection:bg-lime selection:text-black antialiased;
   }
 }
 
 .glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  @apply bg-white/70 backdrop-blur-xl border border-black/5 shadow-sm;
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-solar-black via-solar-black to-slate-600;
 }
 
 .glow-lime {
-  filter: drop-shadow(0 0 10px rgba(204, 255, 0, 0.4));
+  filter: drop-shadow(0 0 8px rgba(191, 255, 0, 0.5));
 }
 
 .neon-border {
-  @apply border border-white/10 hover:border-lime/40 transition-colors duration-500;
+  @apply border border-black/5 hover:border-lime/60 transition-colors duration-500;
 }
 
 .glow-blue {
-  filter: drop-shadow(0 0 8px rgba(0, 191, 255, 0.6));
+  filter: drop-shadow(0 0 8px rgba(0, 136, 255, 0.4));
 }
 
 .lime-text-glow {
-  text-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
+  text-shadow: 0 0 10px rgba(191, 255, 0, 0.2);
 }
