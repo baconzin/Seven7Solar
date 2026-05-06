@@ -233,9 +233,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-8xl font-serif font-medium leading-[1.1] mb-8 text-solar-black max-w-5xl mx-auto"
+          className="text-3xl md:text-5xl font-serif font-medium leading-[1.1] mb-8 text-solar-black max-w-5xl mx-auto"
         >
-          Troque sua conta de luz por uma parcela <span className="text-lime lime-text-glow">90% menor</span>
+          Sua conta de energia agora é o seu <span className="text-lime lime-text-glow">melhor investimento</span>
         </motion.h1>
 
         <motion.p 
@@ -244,7 +244,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-lg md:text-2xl text-solar-black/60 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
         >
-          Tenha energia solar pelo resto da vida com investimentos que se pagam sozinhos. Projetos premium para residências, fazendas e empresas.
+          Pare de pagar por algo que nunca será seu. <br /> Gere sua própria energia!
         </motion.p>
 
         <motion.div 
@@ -410,20 +410,30 @@ const CalculatorSection = () => {
   const monthlySaving = billValue * 0.95;
   const yearlySaving = monthlySaving * 12;
   const plates = Math.ceil(billValue / 65);
+  const installmentValue = billValue * 0.8;
   const payback = 2.5;
 
   return (
-    <section id="simulator" className="py-24 relative overflow-hidden bg-white">
+    <section id="simulator" className="py-24 relative overflow-hidden bg-white border-b border-black/5">
       <div className="absolute top-0 left-0 w-full h-full bg-lime/5 -skew-y-3 origin-top-left -z-10"></div>
       <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-lime font-bold uppercase tracking-widest text-sm mb-4"
+          >
+            Troque sua conta de luz por uma parcela 90% menor
+          </motion.p>
+          <SectionHeading 
+            subtitle="Simulador de Economia"
+            title="Quanto você pode poupar?"
+            centered
+          />
+        </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div>
-            <SectionHeading 
-              subtitle="Simulador de Economia"
-              title="Quanto você pode poupar?"
-              description="Calcule agora uma estimativa realista do seu potencial de economia com a energia solar da Seven."
-            />
-            
             <div className="glass p-8 md:p-12 rounded-[2rem] neon-border">
               <div className="mb-10">
                 <label className="block text-sm font-bold uppercase tracking-widest text-solar-black/50 mb-4">Valor Médio da Conta (R$)</label>
@@ -431,7 +441,7 @@ const CalculatorSection = () => {
                    <input 
                     type="range" 
                     min="150" 
-                    max="10000" 
+                    max="20000" 
                     step="50" 
                     value={billValue} 
                     onChange={(e) => setBillValue(Number(e.target.value))}
@@ -455,7 +465,18 @@ const CalculatorSection = () => {
                 ))}
               </div>
 
-              <Button variant="lime" className="w-full">Gerar Relatório Detalhado</Button>
+              <div className="space-y-4">
+                <Button variant="lime" className="w-full">Gerar Relatório Detalhado</Button>
+                <a 
+                  href={`https://wa.me/5519993104774?text=${encodeURIComponent(`Gostaria de ter meu painel solar instalado por apenas R$ ${installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} /mês!`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 px-6 rounded-2xl bg-solar-black text-white hover:bg-lime hover:text-solar-black transition-all duration-500 font-medium group text-sm flex items-center justify-center gap-3"
+                >
+                  Tenha agora seu painel solar instalado por apenas <span className="text-lime group-hover:text-solar-black font-bold">R$ {installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} /mês</span>
+                  <ArrowRight size={18} />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -791,6 +812,7 @@ const App: React.FC = () => {
     <div className="flex flex-col">
       <Navbar />
       <Hero />
+      <CalculatorSection />
       <Benefits />
       
       {/* About Section */}
@@ -832,7 +854,6 @@ const App: React.FC = () => {
 
       <Solutions />
       <HowItWorks />
-      <CalculatorSection />
       <Testimonials />
       
       {/* CTA Section */}
