@@ -35,7 +35,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-white text-solar-black selection:bg-lime selection:text-black antialiased;
+    @apply bg-[#FAFFEB] text-solar-black selection:bg-lime selection:text-black antialiased;
   }
 }
 

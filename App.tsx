@@ -41,14 +41,14 @@ const COLORS = {
 
 // --- Components ---
 
-const Logo = ({ className = "" }: { className?: string }) => (
+const Logo = ({ className = "", light = false }: { className?: string, light?: boolean }) => (
   <div className={`flex items-center font-bold tracking-tighter ${className}`}>
     <div className="flex flex-col leading-none">
-      <span className="text-solar-black text-2xl tracking-[0.2em]">SEVEN</span>
+      <span className={`${light ? 'text-white' : 'text-solar-black'} text-2xl tracking-[0.2em] transition-colors`}>SEVEN</span>
       <span className="text-lime text-[10px] tracking-[0.5em] font-light">ENERGY</span>
     </div>
     <span className="text-solar-blue text-4xl italic ml-1 glow-blue -mt-1">7</span>
-    <span className="text-solar-black text-2xl ml-1">SOLAR</span>
+    <span className={`${light ? 'text-white' : 'text-solar-black'} text-2xl ml-1 transition-colors`}>SOLAR</span>
   </div>
 );
 
@@ -84,44 +84,51 @@ const SectionHeading = ({
   subtitle, 
   title, 
   description, 
-  centered = false 
+  centered = false,
+  theme = 'light'
 }: { 
   subtitle: string, 
   title: string, 
   description?: string,
-  centered?: boolean 
-}) => (
-  <div className={`max-w-3xl ${centered ? 'text-center mx-auto' : ''} mb-16`}>
-    <motion.span 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="text-lime font-bold tracking-[0.3em] uppercase text-xs mb-4 block"
-    >
-      {subtitle}
-    </motion.span>
-    <motion.h2 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.1 }}
-      className="text-4xl md:text-6xl font-serif font-medium mb-6 leading-tight"
-    >
-      {title}
-    </motion.h2>
-    {description && (
-      <motion.p 
+  centered?: boolean,
+  theme?: 'light' | 'dark' | 'lime'
+}) => {
+  const isDarkBg = theme === 'dark';
+  const isLimeBg = theme === 'lime';
+  
+  return (
+    <div className={`max-w-3xl ${centered ? 'text-center mx-auto' : ''} mb-16`}>
+      <motion.span 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-        className="text-solar-black/60 text-lg leading-relaxed"
+        className={`font-bold tracking-[0.3em] uppercase text-xs mb-4 block ${isLimeBg ? 'text-solar-black/80' : 'text-lime'}`}
       >
-        {description}
-      </motion.p>
-    )}
-  </div>
-);
+        {subtitle}
+      </motion.span>
+      <motion.h2 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.1 }}
+        className={`text-4xl md:text-6xl font-serif font-medium mb-6 leading-tight ${isDarkBg ? 'text-white' : 'text-solar-black'}`}
+      >
+        {title}
+      </motion.h2>
+      {description && (
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className={`text-lg leading-relaxed ${isDarkBg ? 'text-white/60' : isLimeBg ? 'text-solar-black/70' : 'text-solar-black/60'}`}
+        >
+          {description}
+        </motion.p>
+      )}
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -145,7 +152,7 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'py-4 bg-white/80 backdrop-blur-md border-b border-black/5' : 'py-8 bg-transparent'}`}>
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a href="#home" className="hover:opacity-80 transition-opacity">
-          <Logo />
+          <Logo light={!isScrolled} />
         </a>
 
         {/* Desktop Menu */}
@@ -154,7 +161,7 @@ const Navbar = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              className="text-sm font-medium text-solar-black/70 hover:text-lime transition-colors uppercase tracking-widest px-2 py-1"
+              className={`text-sm font-medium transition-colors uppercase tracking-widest px-2 py-1 ${!isScrolled ? 'text-white/80 hover:text-lime' : 'text-solar-black/70 hover:text-lime'}`}
             >
               {link.name}
             </a>
@@ -170,7 +177,7 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-solar-black p-2"
+          className={`md:hidden p-2 ${!isScrolled ? 'text-white' : 'text-solar-black'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -184,7 +191,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-white border-b border-black/5 p-8 md:hidden"
+            className="absolute top-full left-0 w-full bg-white border-b border-black/5 p-8 md:hidden shadow-xl"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
@@ -217,17 +224,17 @@ const Hero = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-40 pb-24">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-40 pb-24 bg-solar-black">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <motion.img 
           style={{ y: y1 }}
           src="https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?auto=format&fit=crop&q=80&w=2000" 
           alt="Modern house with solar panels" 
-          className="w-full h-[120%] object-cover opacity-30 scale-110 origin-top"
+          className="w-full h-[120%] object-cover opacity-20 scale-110 origin-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime/10 blur-[150px] rounded-full pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-solar-black/40 via-solar-black/80 to-solar-black"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime/20 blur-[150px] rounded-full pointer-events-none"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10 text-center">
@@ -235,10 +242,10 @@ const Hero = () => {
            initial={{ opacity: 0, scale: 0.9 }}
            animate={{ opacity: 1, scale: 1 }}
            transition={{ duration: 0.8 }}
-           className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 border border-black/5 shadow-sm mt-8 md:mt-0"
+           className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-8 border border-lime/30 shadow-[0_0_15px_rgba(191,255,0,0.2)] mt-8 md:mt-0"
         >
           <span className="w-2 h-2 bg-lime rounded-full animate-pulse shadow-[0_0_10px_#BFFF00]"></span>
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-solar-black/80">Economize ou até mesmo faça dinheiro utilizando o sol!</span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/90">Economize ou até mesmo faça dinheiro utilizando o sol!</span>
         </motion.div>
 
         {/* Image Collage */}
@@ -248,18 +255,18 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.2 }}
           className="mb-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto h-[300px] md:h-[400px]"
         >
-          <div className="col-span-2 row-span-2 rounded-3xl overflow-hidden shadow-2xl relative group">
-             <img src="https://sunus.com.br/app/uploads/2025/07/residencia-de-alto-padrao-em-brumadinho.jpg" alt="Residência de alto padrão com painel solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          <div className="col-span-2 row-span-2 rounded-3xl overflow-hidden shadow-2xl shadow-lime/5 relative group border border-white/10">
+             <img src="https://sunus.com.br/app/uploads/2025/07/residencia-de-alto-padrao-em-brumadinho.jpg" alt="Residência de alto padrão com painel solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
           </div>
-          <div className="rounded-3xl overflow-hidden shadow-xl relative group hidden md:block">
-             <img src="https://ngwsistems.com.br/foto_engenheiro.jpg" alt="Engenheiro" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          <div className="rounded-3xl overflow-hidden shadow-xl shadow-lime/5 relative group hidden md:block border border-white/10">
+             <img src="https://ngwsistems.com.br/foto_engenheiro.jpg" alt="Engenheiro" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
           </div>
-          <div className="rounded-3xl overflow-hidden shadow-xl relative group hidden md:block">
-             <img src="https://s2-g1.glbimg.com/F06MiR3iucwF0jjsMgXzpCOd_To=/0x0:1280x719/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/Y/Y/NhO6hWSY2ZwJ1NWiQ96g/whatsapp-image-2020-11-26-at-15.09.58.jpeg" alt="Usina de energia solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          <div className="rounded-3xl overflow-hidden shadow-xl shadow-lime/5 relative group hidden md:block border border-white/10">
+             <img src="https://s2-g1.glbimg.com/F06MiR3iucwF0jjsMgXzpCOd_To=/0x0:1280x719/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/Y/Y/NhO6hWSY2ZwJ1NWiQ96g/whatsapp-image-2020-11-26-at-15.09.58.jpeg" alt="Usina de energia solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
           </div>
-          <div className="col-span-2 rounded-3xl overflow-hidden shadow-xl relative group">
-             <img src="https://www.bloomberglinea.com/resizer/v2/DYTHX4FKKBAKTGVPOE2O4FN7T4.jpeg?auth=def2cd2078b6588a41a3f47ab7a62d3096b44d3270a112ed99cf14e557c2a1cb&width=800&height=600&quality=80&focal=890,768" alt="Usina Fotovoltaica" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+          <div className="col-span-2 rounded-3xl overflow-hidden shadow-xl shadow-lime/5 relative group border border-white/10">
+             <img src="https://www.bloomberglinea.com/resizer/v2/DYTHX4FKKBAKTGVPOE2O4FN7T4.jpeg?auth=def2cd2078b6588a41a3f47ab7a62d3096b44d3270a112ed99cf14e557c2a1cb&width=800&height=600&quality=80&focal=890,768" alt="Usina Fotovoltaica" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90" />
+             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-6">
                 <span className="text-white font-medium text-lg text-left">Usinas e Grandes Projetos</span>
              </div>
           </div>
@@ -269,7 +276,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-3xl md:text-5xl font-serif font-medium leading-[1.1] mb-8 text-solar-black max-w-5xl mx-auto"
+          className="text-3xl md:text-5xl font-serif font-medium leading-[1.1] mb-8 text-white max-w-5xl mx-auto"
         >
           Sua conta de energia agora é o seu <span className="text-lime lime-text-glow">melhor investimento</span>
         </motion.h1>
@@ -278,7 +285,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-lg md:text-2xl text-solar-black/60 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
+          className="text-lg md:text-2xl text-white/70 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
         >
           Pare de pagar por algo que nunca será seu. <br /> Gere sua própria energia!
         </motion.p>
@@ -296,7 +303,7 @@ const Hero = () => {
           >
             Solicitar Orçamento <ArrowUpRight className="inline-block ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Button>
-          <Button variant="outline" className="w-full sm:w-auto text-lg" onClick={() => document.getElementById('simulator')?.scrollIntoView()}>
+          <Button variant="outline" className="w-full sm:w-auto text-lg text-white border-white/20 hover:border-lime hover:text-lime" onClick={() => document.getElementById('simulator')?.scrollIntoView()}>
             Simular Economia
           </Button>
         </motion.div>
@@ -340,13 +347,14 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden bg-solar-gray">
+    <section className="py-24 relative overflow-hidden bg-solar-black">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Por que escolher solar?"
           title="Vantagens que transformam"
           description="A Seven Solar entrega soluções que unem inteligência financeira e sustentabilidade real para o seu dia a dia."
           centered
+          theme="dark"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -357,13 +365,13 @@ const Benefits = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="glass p-10 rounded-3xl group hover:border-lime/40 transition-all duration-500 neon-border"
+              className="bg-white/5 border border-white/10 p-10 rounded-3xl group hover:border-lime/40 transition-all duration-500"
             >
-              <div className="w-16 h-16 rounded-2xl bg-solar-black/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                 {benefit.icon}
               </div>
-              <h3 className="text-2xl font-medium mb-4 group-hover:text-lime transition-colors">{benefit.title}</h3>
-              <p className="text-solar-black/50 leading-relaxed">{benefit.description}</p>
+              <h3 className="text-2xl font-medium mb-4 text-white group-hover:text-lime transition-colors">{benefit.title}</h3>
+              <p className="text-white/50 leading-relaxed">{benefit.description}</p>
             </motion.div>
           ))}
         </div>
@@ -398,12 +406,13 @@ const Solutions = () => {
   ];
 
   return (
-    <section id="soluções" className="py-24 bg-white">
+    <section id="soluções" className="py-24 bg-lime">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Nossas Soluções"
           title="Energia sob medida para você"
           description="Não importa o tamanho da sua necessidade, temos um projeto otimizado para o seu perfil de consumo."
+          theme="lime"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -414,26 +423,26 @@ const Solutions = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group relative h-[600px] rounded-[40px] overflow-hidden bg-solar-gray"
+              className="group relative h-[600px] rounded-[40px] overflow-hidden bg-solar-black"
             >
-              <img src={sol.image} alt={sol.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
+              <img src={sol.image} alt={sol.title} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-solar-black via-solar-black/60 to-transparent"></div>
               
               <div className="absolute inset-0 p-10 flex flex-col justify-end">
-                <h3 className={`text-4xl font-serif italic mb-6 ${sol.color === 'lime' ? 'text-lime' : sol.color === 'solarBlue' ? 'text-solar-blue' : 'text-solar-black'}`}>
+                <h3 className={`text-4xl font-serif italic mb-6 ${sol.color === 'lime' ? 'text-lime' : sol.color === 'solarBlue' ? 'text-white' : 'text-white/80'}`}>
                   {sol.title}
                 </h3>
-                <p className="text-solar-black/80 mb-8 leading-relaxed">
+                <p className="text-white/80 mb-8 leading-relaxed">
                   {sol.description}
                 </p>
                 <ul className="space-y-3 mb-10">
                   {sol.items.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-solar-black/60">
+                    <li key={i} className="flex items-center gap-3 text-sm text-white/60">
                       <CheckCircle2 size={16} className="text-lime" /> {item}
                     </li>
                   ))}
                 </ul>
-                <Button variant="outline" className="w-full group-hover:bg-solar-black group-hover:text-white">Saber Mais</Button>
+                <Button variant="outline" className="w-full text-white border-white/20 hover:border-lime group-hover:bg-lime group-hover:text-black">Saber Mais</Button>
               </div>
             </motion.div>
           ))}
@@ -454,14 +463,14 @@ const CalculatorSection = () => {
   const payback = 2.5;
 
   return (
-    <section id="simulator" className="py-24 relative overflow-hidden bg-white border-b border-black/5">
-      <div className="absolute top-0 left-0 w-full h-full bg-lime/5 -skew-y-3 origin-top-left -z-10"></div>
+    <section id="simulator" className="py-24 relative overflow-hidden bg-lime border-b border-black/5">
+      <div className="absolute top-0 left-0 w-full h-full bg-white/10 -skew-y-3 origin-top-left -z-10"></div>
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-lime font-bold uppercase tracking-widest text-sm mb-4"
+            className="text-solar-black/60 font-bold uppercase tracking-widest text-sm mb-4"
           >
             Troque sua conta de luz por uma parcela 90% menor
           </motion.p>
@@ -469,12 +478,13 @@ const CalculatorSection = () => {
             subtitle="Simulador de Economia"
             title="Quanto você pode poupar?"
             centered
+            theme="lime"
           />
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div>
-            <div className="glass p-8 md:p-12 rounded-[2rem] neon-border">
+            <div className="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl">
               <div className="mb-10">
                 <label className="block text-sm font-bold uppercase tracking-widest text-solar-black/50 mb-4">Valor Médio da Conta (R$)</label>
                 <div className="flex items-center gap-6">
@@ -527,36 +537,36 @@ const CalculatorSection = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="glass p-10 rounded-[2.5rem] flex flex-col justify-center border-lime/20 relative overflow-hidden group">
+            <div className="bg-solar-black text-white p-10 rounded-[2.5rem] flex flex-col justify-center relative overflow-hidden group">
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
                   <TrendingUp size={80} className="text-lime" />
                </div>
-               <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Economia Mensal</span>
+               <span className="text-sm font-bold text-white/40 uppercase tracking-widest mb-2">Economia Mensal</span>
                <div className="text-4xl font-serif text-lime font-bold">R$ {monthlySaving.toFixed(2)}</div>
-               <div className="text-xs text-solar-black/30 mt-4">Redução estimada de 95%</div>
+               <div className="text-xs text-white/30 mt-4">Redução estimada de 95%</div>
             </div>
 
-            <div className="glass p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
+            <div className="bg-white p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                  <Sun size={80} className="text-solar-blue" />
+                  <Sun size={80} className="text-lime" />
                </div>
                <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Qtde. de Placas</span>
                <div className="text-4xl font-serif text-solar-black font-bold">{plates} Unidades</div>
                <div className="text-xs text-solar-black/30 mt-4">Aproximadamente</div>
             </div>
 
-            <div className="glass p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
+            <div className="bg-white p-10 rounded-[2.5rem] flex flex-col justify-center group overflow-hidden">
                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 transition-opacity">
-                  <Calculator size={80} className="text-solar-black" />
+                  <Calculator size={80} className="text-lime" />
                </div>
                <span className="text-sm font-bold text-solar-black/40 uppercase tracking-widest mb-2">Economia Anual</span>
                <div className="text-4xl font-serif text-solar-black font-bold">R$ {yearlySaving.toLocaleString('pt-BR')}</div>
                <div className="text-xs text-solar-black/30 mt-4">Mais liberdade financeira</div>
             </div>
 
-            <div className="bg-lime p-10 rounded-[2.5rem] flex flex-col justify-center text-black shadow-[0_0_50px_rgba(191,255,0,0.1)]">
+            <div className="bg-solar-black p-10 rounded-[2.5rem] flex flex-col justify-center text-white shadow-[0_0_50px_rgba(191,255,0,0.1)]">
                <span className="text-sm font-bold opacity-60 uppercase tracking-widest mb-2">Retorno Médio</span>
-               <div className="text-4xl font-serif font-bold italic">{payback} Anos</div>
+               <div className="text-4xl font-serif text-lime font-bold italic">{payback} Anos</div>
                <div className="text-xs opacity-50 mt-4">Estimativa de Investimento</div>
             </div>
           </div>
@@ -575,12 +585,13 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projetos" className="py-24 bg-solar-gray">
+    <section id="projetos" className="py-24 bg-lime">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Portfólio"
           title="Excelência em cada painel"
           description="Nossos projetos combinam design industrial moderno com eficiência recorde."
+          theme="lime"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -591,13 +602,13 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group relative aspect-[3/4] rounded-3xl overflow-hidden"
+              className="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-xl"
             >
               <img src={p.img} alt={p.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-solar-black via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
               <div className="absolute bottom-6 left-6 right-6">
                 <span className="text-lime text-[10px] font-bold uppercase tracking-[0.3em] mb-1 block">{p.category}</span>
-                <h4 className="text-xl font-medium text-solar-black">{p.title}</h4>
+                <h4 className="text-xl font-medium text-white">{p.title}</h4>
               </div>
             </motion.div>
           ))}
@@ -611,14 +622,14 @@ const Contact = () => {
   const cities = ["Rio Claro, SP", "Araras, SP", "Campinas, SP", "Limeira, SP", "Piracicaba, SP", "Santa Gertrudes, SP", "Ajapi, SP", "Cordeirópolis, SP", "Ipeúna, SP", "Corumbataí, SP", "Itirapina, SP"];
   
   return (
-    <section id="contato" className="py-24 relative overflow-hidden bg-white">
+    <section id="contato" className="py-24 relative overflow-hidden bg-solar-black text-white">
        {/* Fake Map background effect */}
-      <div className="absolute inset-0 -z-10 opacity-40">
-        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_1px,transparent_1px)] [background-size:20px_20px]"></div>
+      <div className="absolute inset-0 -z-10 opacity-20">
+        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(191,255,0,0.1)_1px,transparent_1px)] [background-size:20px_20px]"></div>
       </div>
 
       <div className="container mx-auto px-6">
-        <div className="glass rounded-[3rem] p-10 md:p-20 overflow-hidden relative">
+        <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 md:p-20 overflow-hidden relative">
           <div className="absolute top-0 right-0 w-64 h-64 bg-lime/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -627,36 +638,37 @@ const Contact = () => {
                 subtitle="Contato"
                 title="Vamos construir o seu futuro hoje"
                 description="Nossa equipe está pronta para desenhar o projeto ideal para a sua realidade."
+                theme="dark"
               />
 
               <div className="space-y-8">
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
                     <Phone className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-1">WhatsApp</span>
-                    <span className="text-xl font-medium text-solar-black">+55 (19) 99310-4774</span>
+                    <span className="text-xs text-white/40 uppercase tracking-widest block mb-1">WhatsApp</span>
+                    <span className="text-xl font-medium text-white">+55 (19) 99310-4774</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-6 group cursor-pointer">
-                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors">
                     <Mail className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-1">Email</span>
-                    <span className="text-xl font-medium text-solar-black">contato@sevensolar.com.br</span>
+                    <span className="text-xs text-white/40 uppercase tracking-widest block mb-1">Email</span>
+                    <span className="text-xl font-medium text-white">contato@sevensolar.com.br</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 rounded-2xl bg-solar-black/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors shrink-0">
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-lime/20 transition-colors shrink-0">
                     <MapPin className="text-lime" />
                   </div>
                   <div>
-                    <span className="text-xs text-solar-black/30 uppercase tracking-widest block mb-3">Área de Atuação</span>
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm font-medium text-solar-black/80">
+                    <span className="text-xs text-white/40 uppercase tracking-widest block mb-3">Área de Atuação</span>
+                    <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm font-medium text-white/80">
                        {cities.map(city => <span key={city}>{city}</span>)}
                     </div>
                   </div>
@@ -664,29 +676,29 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="bg-solar-black/5 p-8 md:p-12 rounded-[2.5rem] border border-solar-black/10">
+            <div className="bg-white/5 p-8 md:p-12 rounded-[2.5rem] border border-white/10">
               <form className="space-y-6">
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Nome Completo</label>
-                  <input type="text" placeholder="Seu nome" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Nome Completo</label>
+                  <input type="text" placeholder="Seu nome" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Email Corporativo</label>
-                  <input type="email" placeholder="seu@email.com" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Email Corporativo</label>
+                  <input type="email" placeholder="seu@email.com" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
                 </div>
                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Telefone</label>
-                      <input type="tel" placeholder="(19) 99310-4774" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
+                      <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Telefone</label>
+                      <input type="tel" placeholder="(19) 99310-4774" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
                     </div>
                      <div>
-                      <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Cidade/UF</label>
-                      <input type="text" placeholder="Sua cidade" className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors" />
+                      <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Cidade/UF</label>
+                      <input type="text" placeholder="Sua cidade" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
                     </div>
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase tracking-widest text-solar-black/40 block mb-2">Mensagem</label>
-                  <textarea rows={4} placeholder="Conte um pouco sobre sua necessidade..." className="w-full bg-white border border-solar-black/10 rounded-xl px-4 py-3 text-solar-black focus:outline-none focus:border-lime/50 transition-colors resize-none"></textarea>
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Mensagem</label>
+                  <textarea rows={4} placeholder="Conte um pouco sobre sua necessidade..." className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors resize-none"></textarea>
                 </div>
                 <Button variant="lime" className="w-full py-4 text-lg">Enviar Mensagem</Button>
               </form>
@@ -767,18 +779,19 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-solar-black overflow-hidden">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Processo de Transição"
           title="Sua jornada para a liberdade"
           description="Um caminho simples, transparente e sem dor de cabeça para você parar de pagar caro na energia."
           centered
+          theme="dark"
         />
 
         <div className="relative mt-20">
           {/* Progress Line */}
-          <div className="absolute top-1/2 left-0 w-full h-px bg-solar-black/10 -translate-y-1/2 hidden lg:block"></div>
+          <div className="absolute top-1/2 left-0 w-full h-px bg-white/10 -translate-y-1/2 hidden lg:block"></div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
             {steps.map((step, idx) => (
@@ -790,11 +803,11 @@ const HowItWorks = () => {
                 transition={{ delay: idx * 0.1 }}
                 className="relative z-10 text-center group"
               >
-                <div className="w-16 h-16 rounded-full bg-solar-gray border border-solar-black/10 flex items-center justify-center mx-auto mb-6 group-hover:border-lime group-hover:scale-110 transition-all duration-500 glass">
+                <div className="w-16 h-16 rounded-full bg-solar-black border border-white/10 flex items-center justify-center mx-auto mb-6 group-hover:border-lime group-hover:scale-110 transition-all duration-500 shadow-xl">
                    <span className="text-2xl font-serif text-lime font-bold italic">{idx + 1}</span>
                 </div>
-                <h4 className="text-xl font-medium mb-3 group-hover:text-lime transition-colors">{step.title}</h4>
-                <p className="text-sm text-solar-black/40 leading-relaxed max-w-[200px] mx-auto">{step.desc}</p>
+                <h4 className="text-xl font-medium mb-3 text-white group-hover:text-lime transition-colors">{step.title}</h4>
+                <p className="text-sm text-white/40 leading-relaxed max-w-[200px] mx-auto">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -812,13 +825,14 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-24 bg-solar-gray">
+    <section className="py-24 bg-lime">
       <div className="container mx-auto px-6">
         <SectionHeading 
           subtitle="Depoimentos"
           title="Quem usa, aprova"
           description="Histórias reais de quem já conquistou a independência energética com a Seven Solar."
           centered
+          theme="lime"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -828,7 +842,7 @@ const Testimonials = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="glass p-10 rounded-[2.5rem] border-solar-black/5 flex flex-col justify-between"
+              className="bg-white p-10 rounded-[2.5rem] shadow-xl flex flex-col justify-between"
             >
               <div>
                 <div className="flex gap-1 mb-6">
@@ -837,12 +851,12 @@ const Testimonials = () => {
                 <p className="text-lg italic text-solar-black/70 mb-8 leading-relaxed">"{r.text}"</p>
               </div>
               <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 rounded-full bg-solar-black/5 flex items-center justify-center font-bold text-lime">
+                 <div className="w-12 h-12 rounded-full bg-lime flex items-center justify-center font-bold text-solar-black">
                    {r.name[0]}
                  </div>
                  <div>
                     <div className="font-bold text-solar-black">{r.name}</div>
-                    <div className="text-xs text-solar-black/30 uppercase tracking-widest">{r.role}</div>
+                    <div className="text-xs text-solar-black/50 uppercase tracking-widest">{r.role}</div>
                  </div>
               </div>
             </motion.div>
@@ -903,20 +917,20 @@ const App: React.FC = () => {
       <Testimonials />
       
       {/* CTA Section */}
-      <section className="py-24 bg-lime relative overflow-hidden group">
-        <div className="absolute top-0 right-0 p-20 opacity-10 group-hover:rotate-12 transition-transform duration-1000">
-          <Sun size={400} className="text-black" />
+      <section className="py-24 bg-solar-black relative overflow-hidden group border-y border-white/10">
+        <div className="absolute top-0 right-0 p-20 opacity-[0.03] group-hover:rotate-12 transition-transform duration-1000">
+          <Sun size={400} className="text-lime" />
         </div>
         <div className="container mx-auto px-6 relative z-10 text-center">
-           <h2 className="text-4xl md:text-7xl font-serif text-black font-bold mb-8 leading-tight">
+           <h2 className="text-4xl md:text-7xl font-serif text-white font-bold mb-8 leading-tight">
              Comece hoje a economizar <br /> com energia solar
            </h2>
-           <p className="text-black/60 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-light">
+           <p className="text-white/60 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-light">
              Não deixe para amanhã a economia que seu bolso merece hoje. Fale com um especialista.
            </p>
            <Button 
-             variant="primary" 
-             className="bg-black text-white hover:bg-black/80 text-xl py-5 px-12"
+             variant="lime" 
+             className="text-xl py-5 px-12"
              onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar o meu orçamento agora.', '_blank')}
            >
              Solicitar Orçamento Agora
