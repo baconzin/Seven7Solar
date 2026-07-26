@@ -159,7 +159,13 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <Button variant="lime" className="text-sm py-2.5">Solicitar Orçamento</Button>
+          <Button 
+            variant="lime" 
+            className="text-sm py-2.5"
+            onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
+          >
+            Solicitar Orçamento
+          </Button>
         </div>
 
         {/* Mobile Toggle */}
@@ -191,7 +197,13 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <Button variant="lime" className="w-full text-lg">Solicitar Orçamento</Button>
+              <Button 
+                variant="lime" 
+                className="w-full text-lg"
+                onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
+              >
+                Solicitar Orçamento
+              </Button>
             </div>
           </motion.div>
         )}
@@ -205,16 +217,16 @@ const Hero = () => {
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
 
   return (
-    <section id="home" className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden pt-20">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-40 pb-24">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <motion.img 
           style={{ y: y1 }}
           src="https://images.unsplash.com/photo-1509391366360-fe5bb58583bb?auto=format&fit=crop&q=80&w=2000" 
           alt="Modern house with solar panels" 
-          className="w-full h-full object-cover opacity-60 scale-110"
+          className="w-full h-[120%] object-cover opacity-30 scale-110 origin-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/40 to-white"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime/10 blur-[150px] rounded-full pointer-events-none"></div>
       </div>
 
@@ -223,16 +235,40 @@ const Hero = () => {
            initial={{ opacity: 0, scale: 0.9 }}
            animate={{ opacity: 1, scale: 1 }}
            transition={{ duration: 0.8 }}
-           className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 border border-black/5"
+           className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 border border-black/5 shadow-sm mt-8 md:mt-0"
         >
           <span className="w-2 h-2 bg-lime rounded-full animate-pulse shadow-[0_0_10px_#BFFF00]"></span>
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-solar-black/80">Líder em Eficiência Energética</span>
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-solar-black/80">Economize ou até mesmo faça dinheiro utilizando o sol!</span>
+        </motion.div>
+
+        {/* Image Collage */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mb-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto h-[300px] md:h-[400px]"
+        >
+          <div className="col-span-2 row-span-2 rounded-3xl overflow-hidden shadow-2xl relative group">
+             <img src="https://sunus.com.br/app/uploads/2025/07/residencia-de-alto-padrao-em-brumadinho.jpg" alt="Residência de alto padrão com painel solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div className="rounded-3xl overflow-hidden shadow-xl relative group hidden md:block">
+             <img src="https://ngwsistems.com.br/foto_engenheiro.jpg" alt="Engenheiro" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div className="rounded-3xl overflow-hidden shadow-xl relative group hidden md:block">
+             <img src="https://s2-g1.glbimg.com/F06MiR3iucwF0jjsMgXzpCOd_To=/0x0:1280x719/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2020/Y/Y/NhO6hWSY2ZwJ1NWiQ96g/whatsapp-image-2020-11-26-at-15.09.58.jpeg" alt="Usina de energia solar" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+          </div>
+          <div className="col-span-2 rounded-3xl overflow-hidden shadow-xl relative group">
+             <img src="https://www.bloomberglinea.com/resizer/v2/DYTHX4FKKBAKTGVPOE2O4FN7T4.jpeg?auth=def2cd2078b6588a41a3f47ab7a62d3096b44d3270a112ed99cf14e557c2a1cb&width=800&height=600&quality=80&focal=890,768" alt="Usina Fotovoltaica" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                <span className="text-white font-medium text-lg text-left">Usinas e Grandes Projetos</span>
+             </div>
+          </div>
         </motion.div>
 
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className="text-3xl md:text-5xl font-serif font-medium leading-[1.1] mb-8 text-solar-black max-w-5xl mx-auto"
         >
           Sua conta de energia agora é o seu <span className="text-lime lime-text-glow">melhor investimento</span>
@@ -241,7 +277,7 @@ const Hero = () => {
         <motion.p 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="text-lg md:text-2xl text-solar-black/60 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
         >
           Pare de pagar por algo que nunca será seu. <br /> Gere sua própria energia!
@@ -250,10 +286,14 @@ const Hero = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <Button variant="lime" className="w-full sm:w-auto text-lg group">
+          <Button 
+            variant="lime" 
+            className="w-full sm:w-auto text-lg group"
+            onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento para energia solar.', '_blank')}
+          >
             Solicitar Orçamento <ArrowUpRight className="inline-block ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Button>
           <Button variant="outline" className="w-full sm:w-auto text-lg" onClick={() => document.getElementById('simulator')?.scrollIntoView()}>
@@ -466,7 +506,13 @@ const CalculatorSection = () => {
               </div>
 
               <div className="space-y-4">
-                <Button variant="lime" className="w-full">Gerar Relatório Detalhado</Button>
+                <Button 
+                  variant="lime" 
+                  className="w-full"
+                  onClick={() => window.open(`https://wa.me/5519993104774?text=${encodeURIComponent(`Olá! Gostaria de receber o relatório detalhado para uma conta de R$ ${billValue.toLocaleString('pt-BR')}.`)}`, '_blank')}
+                >
+                  Gerar Relatório Detalhado
+                </Button>
                 <a 
                   href={`https://wa.me/5519993104774?text=${encodeURIComponent(`Gostaria de ter meu painel solar instalado por apenas R$ ${installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} /mês!`)}`}
                   target="_blank"
@@ -868,7 +914,11 @@ const App: React.FC = () => {
            <p className="text-black/60 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-light">
              Não deixe para amanhã a economia que seu bolso merece hoje. Fale com um especialista.
            </p>
-           <Button variant="primary" className="bg-black text-white hover:bg-black/80 text-xl py-5 px-12">
+           <Button 
+             variant="primary" 
+             className="bg-black text-white hover:bg-black/80 text-xl py-5 px-12"
+             onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar o meu orçamento agora.', '_blank')}
+           >
              Solicitar Orçamento Agora
            </Button>
         </div>
