@@ -169,7 +169,7 @@ const Navbar = () => {
           <Button 
             variant="lime" 
             className="text-sm py-2.5"
-            onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
+            onClick={() => window.open('https://wa.me/5519971636969?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
           >
             Solicitar Orçamento
           </Button>
@@ -207,7 +207,7 @@ const Navbar = () => {
               <Button 
                 variant="lime" 
                 className="w-full text-lg"
-                onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
+                onClick={() => window.open('https://wa.me/5519971636969?text=Olá! Gostaria de solicitar um orçamento.', '_blank')}
               >
                 Solicitar Orçamento
               </Button>
@@ -299,7 +299,7 @@ const Hero = () => {
           <Button 
             variant="lime" 
             className="w-full sm:w-auto text-lg group"
-            onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar um orçamento para energia solar.', '_blank')}
+            onClick={() => window.open('https://wa.me/5519971636969?text=Olá! Gostaria de solicitar um orçamento para energia solar.', '_blank')}
           >
             Solicitar Orçamento <ArrowUpRight className="inline-block ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </Button>
@@ -519,12 +519,12 @@ const CalculatorSection = () => {
                 <Button 
                   variant="lime" 
                   className="w-full"
-                  onClick={() => window.open(`https://wa.me/5519993104774?text=${encodeURIComponent(`Olá! Gostaria de receber o relatório detalhado para uma conta de R$ ${billValue.toLocaleString('pt-BR')}.`)}`, '_blank')}
+                  onClick={() => window.open(`https://wa.me/5519971636969?text=${encodeURIComponent(`Olá! Gostaria de receber o relatório detalhado para uma conta de R$ ${billValue.toLocaleString('pt-BR')}.`)}`, '_blank')}
                 >
                   Gerar Relatório Detalhado
                 </Button>
                 <a 
-                  href={`https://wa.me/5519993104774?text=${encodeURIComponent(`Gostaria de ter meu painel solar instalado por apenas R$ ${installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} /mês!`)}`}
+                  href={`https://wa.me/5519971636969?text=${encodeURIComponent(`Gostaria de ter meu painel solar instalado por apenas R$ ${installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} /mês!`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-4 px-6 rounded-2xl bg-solar-black text-white hover:bg-lime hover:text-solar-black transition-all duration-500 font-medium group text-sm flex items-center justify-center gap-3"
@@ -648,7 +648,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <span className="text-xs text-white/40 uppercase tracking-widest block mb-1">WhatsApp</span>
-                    <span className="text-xl font-medium text-white">+55 (19) 99310-4774</span>
+                    <span className="text-xl font-medium text-white">+55 (19) 97163-6969</span>
                   </div>
                 </div>
 
@@ -689,7 +689,7 @@ const Contact = () => {
                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Telefone</label>
-                      <input type="tel" placeholder="(19) 99310-4774" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
+                      <input type="tel" placeholder="(19) 97163-6969" className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-lime/50 transition-colors" />
                     </div>
                      <div>
                       <label className="text-xs font-bold uppercase tracking-widest text-white/40 block mb-2">Cidade/UF</label>
@@ -931,7 +931,7 @@ const App: React.FC = () => {
            <Button 
              variant="lime" 
              className="text-xl py-5 px-12"
-             onClick={() => window.open('https://wa.me/5519993104774?text=Olá! Gostaria de solicitar o meu orçamento agora.', '_blank')}
+             onClick={() => window.open('https://wa.me/5519971636969?text=Olá! Gostaria de solicitar o meu orçamento agora.', '_blank')}
            >
              Solicitar Orçamento Agora
            </Button>
@@ -944,7 +944,7 @@ const App: React.FC = () => {
       
       {/* Floating WhatsApp Button */}
       <motion.a 
-        href="https://wa.me/5519993104774"
+        href="https://wa.me/5519971636969"
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0, opacity: 0 }}
